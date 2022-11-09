@@ -1,0 +1,262 @@
+<div class="my-4 min-vh-100">
+          <div class="container ">
+            <div class="my-3">
+              <h5>Orders Pickup From Facilitation And Drop To Hub</h5>
+            </div>
+            <div class="row g-0">
+              <div class="col-3 card card-body btn p-1 shadow shadow-sm" [ngClass]="{activeTab: page==1}" (click)="page=1">
+                <p class="small p-0"> <strong><i class="fa fa-check-square-o"></i>Pickup List</strong></p>
+              </div>
+              <div class="col-3 card card-body btn p-1 shadow shadow-sm" [ngClass]="{activeTab: page==2}" (click)="page=2">
+                <p class="small p-0"> <strong><i class="fa fa-check-square-o"></i> Pickup From Facilitation</strong></p>
+              </div>
+              <div class="col-3 card card-body btn p-1 shadow shadow-sm" [ngClass]="{activeTab: page==3}" (click)="page=3">
+                <p class="small p-0"> <strong><i class="fa fa-truck"></i> Drop To Hub</strong></p>
+              </div>
+            </div>
+
+
+            <div class="my-3" [ngSwitch]="page">
+
+              <div class="card rounded-0 shadow shadow-sm" *ngSwitchCase="1">
+                <div class="card-header">
+                  <i class="fa fa-fa-truck"></i>Pickup List
+                </div>
+                <div class="card-body">
+                  <div class="mb-3 card card-body" *ngFor="let order of request_delivery_list|filter:search| paginate: {itemsPerPage: tableSize, currentPage: page1, totalItems: count};let i = index">
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8">
+                    <div class="d-flex justify-content-between">
+                       <h5>Tracking ID : {{order.tracking_id}}</h5>
+                      <h5>Consignment ID : {{order.consignment_id}}</h5>
+                    </div>
+                  </div>
+                    <div class="col-md-2"></div>
+                    </div>
+
+                 <div class="row">
+                  <div class="col-md-6">
+                    <div class="card">
+                      <h6><b>Pickup Address :</b> </h6>
+                      <h6>Facilitation Name : {{order.facilitation_name}}</h6>
+                      <h6>Address : {{order.pickup_location+" "+order.pickup_pincode}}</h6>
+                      <h6>Email : {{order.f_email}}</h6>
+                      <h6>Contact Number : {{order.f_contact_no}}</h6>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card">
+                        <h6><b>Drop To Hub :</b> </h6>
+                        <h6>Hub Name : {{order.hub_name}}</h6>
+                        <h6>Address : {{order.drop_location+" "+order.drop_pincode}}</h6>
+                        <h6>Email : {{order.h_email}}</h6>
+                        <h6>Contact Number : {{order.h_contact_no}}</h6>
+                       </div>
+                    </div>
+                  </div>
+        <br>
+
+                    <div class="text-end">
+                      <button class="btn btn-template bg-primary" type="button" (click)="acceptingParcel(order)">Confirm Consignment To Pickup</button>&nbsp;
+                      <button class="btn btn-template bg-danger" type="button" (click)="open_rejectmodule(order)">Reject Consignment</button>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <pagination-controls
+                      previousLabel="Prev"
+                      nextLabel="Next"
+                      (pageChange)="onTableDataChange($event)"
+                    >
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
+              <div class="card rounded-0 shadow shadow-sm" *ngSwitchCase="2">
+                <div class="card-header">
+                   Pickup From Facilitation
+                </div>
+                <div class="card-body">
+                  <div class="mb-3 card card-body" *ngFor="let order of pickup_delivery_list|filter:search1| paginate: {itemsPerPage: tableSize1, currentPage: page2, totalItems: count1};let i = index">
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8">
+                    <div class="d-flex justify-content-between">
+                       <h5>Tracking ID : {{order.tracking_id}}</h5>
+                      <h5>Consignment ID : {{order.consignment_id}}</h5>
+                    </div>
+                  </div>
+                    <div class="col-md-2"></div>
+                    </div>
+
+                 <div class="row">
+                  <div class="col-md-6">
+                    <div class="card">
+                      <h6><b>Pickup Address :</b> </h6>
+                      <h6>Facilitation Name : {{order.facilitation_name}}</h6>
+                      <h6>Address : {{order.pickup_location+" "+order.pickup_pincode}}</h6>
+                      <h6>Email : {{order.f_email}}</h6>
+                      <h6>Contact Number : {{order.f_contact_no}}</h6>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card">
+                        <h6><b>Drop To Hub :</b> </h6>
+                        <h6>Hub Name : {{order.hub_name}}</h6>
+                        <h6>Address : {{order.drop_location+" "+order.drop_pincode}}</h6>
+                        <h6>Email : {{order.h_email}}</h6>
+                        <h6>Contact Number : {{order.h_contact_no}}</h6>
+                       </div>
+                    </div>
+                  </div>
+        <br>
+                     <div class="text-end">
+                      <button class="btn btn-template bg-primary" type="button" (click)="pickupParcel(order)">Pickup Consignment From Facilitation</button>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <pagination-controls
+                      previousLabel="Prev"
+                      nextLabel="Next"
+                      (pageChange)="onTableDataChange1($event)"
+                    >
+                    </pagination-controls>
+                  </div>
+                </div>
+              </div>
+              <div class="card rounded-0 shadow shadow-sm" *ngSwitchCase="3">
+                <div class="card-header">
+                  <i class="fa fa-fa-truck"></i> Drop To Hub
+                </div>
+                <div class="card-body">
+                  <div class="mb-3 card card-body" *ngFor="let order of drop_delivery_list;index as i">
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8">
+                    <div class="d-flex justify-content-between">
+                       <h5>Tracking ID : {{order.tracking_id}}</h5>
+                      <h5>Consignment ID : {{order.consignment_id}}</h5>
+                    </div>
+                  </div>
+                    <div class="col-md-2"></div>
+                    </div>
+
+                 <div class="row">
+                  <div class="col-md-6">
+                    <div class="card">
+                      <h6><b>Pickup Address :</b> </h6>
+                      <h6>Facilitation Name : {{order.facilitation_name}}</h6>
+                      <h6>Address : {{order.pickup_location+" "+order.pickup_pincode}}</h6>
+                      <h6>Email : {{order.f_email}}</h6>
+                      <h6>Contact Number : {{order.f_contact_no}}</h6>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="card">
+                        <h6><b>Drop To Hub :</b> </h6>
+                        <h6>Hub Name : {{order.hub_name}}</h6>
+                        <h6>Address : {{order.drop_location+" "+order.drop_pincode}}</h6>
+                        <h6>Email : {{order.h_email}}</h6>
+                        <h6>Contact Number : {{order.h_contact_no}}</h6>
+                       </div>
+                    </div>
+                  </div>
+        <br>
+                    <!-- <div class="text-end">
+                      <button class="btn btn-template bg-primary" type="button" (click)="deliverParcel(ord)">Delivery</button>
+                    </div> -->
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <button (click)="ToExcel()" class="btn btn-success">
+                          <i class="fa fa-file-excel-o" aria-hidden="true">Download Excel Format</i></button> </div>
+                    </div>
+
+
+                    <!-- table to convert to Excel -->
+                    <div class="col-lg-12 table-responsive d-none" #TABLE #table>
+                      <div style="padding-bottom: 10px;padding-top: 10px;">
+
+                      </div>
+                      <table class="table table-bordered">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th>S.No</th>
+                            <th>Consignment ID</th>
+                            <th>Tracking ID</th>
+                            <th>Facilitation Name</th>
+                            <th>Pickup Location</th>
+                            <th>Pickup_pincode</th>
+                            <th>Facility contactno</th>
+                            <th>Facility Email</th>
+                            <th>Hub Name</th>
+                            <th>Drop Location</th>
+                            <th>Drop Pincode</th>
+                            <th>Hub contactno</th>
+                            <th>Hub Email</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- {{drop_delivery_list[0]|json}} -->
+                          <tr *ngFor="let tm of drop_delivery_list| filter:search | paginate: {itemsPerPage: tableSize3, currentPage: page3, totalItems: count3};let i = index; filter:search">
+                            <td>{{tableSize3 *(page3-1)+i+1}}</td>
+                            <td>{{tm.consignment_id}}</td>
+                            <td>{{tm.tracking_id}}</td>
+                            <td>{{tm.facilitation_name}}</td>
+                            <td>{{tm.pickup_location}}</td>
+                            <td>{{tm.pickup_pincode}}</td>
+                            <td>{{tm.f_contact_no}}</td>
+                            <td>{{tm.f_email}}</td>
+                            <td>{{tm.hub_name}}</td>
+                            <td>{{tm.drop_location}}</td>
+                            <td>{{tm.drop_pincode}}</td>
+                            <td>{{tm.h_contact_no}}</td>
+                            <td>{{tm.h_email}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                     <!-- table to convert to Excel -->
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="modal fade"  id="reasionmodule1" tabindex="-1" aria-labelledby="exampleModalLabel123" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header border-0">
+                <h5 class="modal-title" id="exampleModalLabel123">
+                 Reject Reasion
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+              </div>
+              <div class="modal-body border-0">
+              <form [formGroup]="form">
+                  <div class="'row">
+                    <textarea class="form-control" formControlName="v_reasion" type="text" [(ngModel)]="reasion" cols="3" [ngClass]="{ 'is-invalid': submitted && f['v_reasion'].errors }"></textarea>
+
+                    <div *ngIf="submitted && f['v_reasion'].errors" class="invalid-feedback">
+                      <div *ngIf="f['v_reasion'].errors['required']">Enter Reasion</div>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="rejectParcel()">Update</button>
+              </div>
+
+            </div>
+          </div>
+        </div>

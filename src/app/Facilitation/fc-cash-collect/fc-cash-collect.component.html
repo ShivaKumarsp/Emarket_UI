@@ -1,0 +1,69 @@
+<ngx-spinner  bdColor="rgba(51,51,51,0.8)"  size="medium"  color="#fff"  type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner> 
+
+  <div class="container">
+    <div class="row d-flex">
+        <div class="col-lg-9 order-2 order-lg-1">
+            <h2>Total Cash Collected</h2>
+        </div>
+        <div class="col-lg-3 text-right order-1 order-lg-2">
+            <ul class="breadcrumb justify-content-lg-end">
+                <li class="breadcrumb-item"><a >Home</a></li>
+                <li class="breadcrumb-item active">Total Cash Collected</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+   
+
+<div class="container my-3">
+    <h6><span class="badge bg-secondary" alignment="text-center">Total Amount Collected</span> &nbsp;
+        <span class="badge bg-primary" alignment="text-left" >{{collected_amount|currency:'INR'}}</span></h6>
+    <div class="col-md-4" style="float: right">                    
+      <input class="form-control form-control-sm" type="text" [(ngModel)]="search" placeholder="search here...">
+      <br>
+    </div>
+  <div id="printDiv">
+   
+    <table class="table table-bordered" [style]="{'height':'500px'}">
+      <table class="table table-sm">
+          <table class="table table-light table-hover">
+      <thead>
+        <tr>
+          <th scope="col">SL No</th>
+      
+          <th scope="col">Collected Amount</th>
+       
+      
+                  
+        </tr> 
+      </thead>
+      <tbody>
+        <tr *ngFor="let pro of cash_collect_list| filter:search | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count};let i = index; filter:search">
+          <td>{{tableSize *(page-1)+i+1}}</td>
+     
+          <td>{{pro.total_amount |currency:'INR'}}</td>
+         
+        
+     
+        </tr>  
+             </tbody>            
+    </table>
+    <div class="d-flex justify-content-center">
+      <pagination-controls
+        previousLabel="Prev"
+        nextLabel="Next"
+        (pageChange)="onTableDataChange($event)"
+      >
+      </pagination-controls>
+    </div>
+  </table>
+  </table>
+  </div>
+</div>
+ 
+ 
+    
+

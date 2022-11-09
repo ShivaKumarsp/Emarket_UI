@@ -1,0 +1,69 @@
+<!-- Hero Section-->
+<div class="min-vh-100">
+<section class="hero hero-page gray-bg padding-small">
+  <div class="container">
+    <div class="row d-flex">
+      <div class="col-lg-9 order-2 order-lg-1">
+        <h4>{{searchTxt}}</h4>
+
+      </div>
+      <div class="col-lg-3 text-right order-1 order-lg-2">
+        <ul class="breadcrumb justify-content-lg-end">
+          <li class="breadcrumb-item"><a href="../../">Home</a></li>
+          <li class="breadcrumb-item active">Shop</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section class="container">
+    
+          <div class="row">
+            <div *ngIf="product_list.length==0">
+              <div class="text-center">
+                <h5>No Result Found</h5>
+              </div>
+            </div>
+
+                    <!-- item-->
+                    <div class="item col-xl-3 col-lg-4 col-md-6" *ngFor="let produ of product_list">
+
+                       <div class="product is-gray">
+                            <div class="image d-flex align-items-center justify-content-center">
+                                <!-- <div class="ribbon ribbon-primary text-uppercase">Sale </div> -->
+                                 <img src="{{imageBaseUrl+produ.imagepath}}">
+                                <div class="hover-overlay d-flex align-items-center justify-content-center">
+                                    <div class="CTA d-flex align-items-center justify-content-center">
+                                        <a type="button" class="add-to-cart" (click)="add_to_cart(produ)"><i class="fa fa-shopping-cart"></i></a>
+                                        <!-- <a type="button"class="visit-product active" (click)="viewproductdetails(produ)"><i class="fa fa-search"></i>View</a> -->
+                                        <a type="button"class="visit-product active" [routerLink]="['/app/home/itemdetails/',produ.itemid]"><i class="fa fa-search"></i>View</a>
+                                        <a  *ngIf="produ.wish_item==0 && produ.v_userid>0" type="button" (click)="add_wish_list(produ)" class="quick-view"><i class="fa fa-heart"></i></a> 
+                                        <a *ngIf="produ.wish_item>0 && produ.v_userid>0" type="button" (click)="remove_wish_list(produ)" class="quick-view"><i style="color: red;" class="fa fa-heart"></i></a> 
+                                    </div>
+                                </div>
+                            </div>
+
+                          
+
+                              <div class="title">
+                           
+                                  <a type="button" [routerLink]="['/app/home/itemdetails/',produ.itemid]">
+                                       <h3 class="h6 text-uppercase no-margin-bottom" >
+                                          {{ (produ.itemname.length>30)? (produ.itemname | slice:0:30)+'....':(produ.itemname) }}
+                                      </h3>
+                                  </a>
+                                  <span class="price text-muted"><del>{{produ.item_mrp|currency:'INR'}}</del> {{produ.listingprice|currency:'INR'}}</span>
+
+                              </div>
+                         
+                        </div>
+                    </div>
+
+              
+        </div>
+   
+  
+  </section>
+
+</div>

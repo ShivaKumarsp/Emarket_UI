@@ -1,0 +1,380 @@
+<ngx-spinner  bdColor="rgba(51,51,51,0.8)"  size="medium"  color="#fff"  type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner> 
+       <div class="min-vh-100">
+    <section class="hero hero-home no-padding">
+
+        <owl-carousel-o [options]="customOptions" >
+          <ng-container *ngFor="let slide of banner_list" class="owl-carousel owl-theme hero-slider">
+            <ng-template id="slide.id" carouselSlide  >
+              <div [style.background-image]="'url('+imageBaseUrl+slide.banner_image+')'" class="item d-flex align-items-center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-6 text-white">
+                      <h1>{{slide.banner_title}}</h1>
+                      <p class="lead">{{slide.banner_details}}</p>
+                      <a  class="btn btn-template wide shop-now" [routerLink]="['/app/productcategory/',slide.add_cat_id]">
+                        Shop Now<i class="icon-bag"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+      </section>
+
+     <!--All product showing-->
+     <section>
+
+        <main>
+            <div class="container">
+                <div class="row">
+                    <!-- Grid -->
+                    <div class="products-grid col-12 sidebar-none">
+
+                        <div class="row">
+
+                            <!-- item-->
+                            <div class="item col-xl-3 col-lg-4 col-md-6" *ngFor="let produ of product_list">
+
+                               <div class="product is-gray">
+                                    <div class="image d-flex align-items-center justify-content-center">
+                                        <!-- <div class="ribbon ribbon-primary text-uppercase">Sale </div> -->
+                                         <img src="{{imageBaseUrl+produ.imagepath}}">
+                                        <div class="hover-overlay d-flex align-items-center justify-content-center">
+                                            <div class="CTA d-flex align-items-center justify-content-center">
+                                                <a type="button" class="add-to-cart" (click)="add_to_cart(produ)"><i class="fa fa-shopping-cart"></i></a>
+                                                <!-- <a type="button"class="visit-product active" (click)="viewproductdetails(produ)"><i class="fa fa-search"></i>View</a> -->
+                                                <a type="button"class="visit-product active" [routerLink]="['/app/home/itemdetails/',produ.itemid]"><i class="fa fa-search"></i>View</a>
+                                                <a  *ngIf="produ.wish_item==0 && produ.v_userid>0" type="button" (click)="add_wish_list(produ)" class="quick-view"><i class="fa fa-heart"></i></a> 
+                                                <a *ngIf="produ.wish_item>0 && produ.v_userid>0" type="button" (click)="remove_wish_list(produ)" class="quick-view"><i style="color: red;" class="fa fa-heart"></i></a> 
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="title" style="display: -webkit-box;">
+
+                                          <a type="button" class="btn btn-template wide next check" (click)="add_to_cart(produ)">
+                                            <i class="fa fa-shopping-cart" style="color: rgb(87, 11, 11);"></i>
+                                          </a> &nbsp; &nbsp;
+                                          <a type="button" class="btn btn-template wide next" [routerLink]="['/app/home/itemdetails/',produ.itemid]">
+                                              View
+                                          </a>
+
+                                      </div> -->
+
+                                      <div class="title">
+                                        <!-- <small class="text-muted">
+                                              {{ itm.itemname}}
+                                              {{itm.itemname.length > 20 ? '...' : ''}}
+                                          </small>  -->
+                                          <a type="button" [routerLink]="['/app/home/itemdetails/',produ.itemid]">
+                                               <h3 class="h6 text-uppercase no-margin-bottom" >
+                                                  {{ (produ.itemname.length>30)? (produ.itemname | slice:0:30)+'....':(produ.itemname) }}
+                                              </h3>
+                                          </a>
+                                          <span class="price text-muted"><del>{{produ.item_mrp|currency:'INR'}}</del> {{produ.listingprice|currency:'INR'}}</span>
+  
+                                      </div>
+                                    <!-- <div class="title">
+                                       <a [routerLink]="['/app/home/itemdetails/',produ.itemid]">
+                                            <h3 class="h6 text-uppercase no-margin-bottom"  >
+                                                {{ (produ.itemname.length>30)? (produ.itemname | slice:0:30)+'....':(produ.itemname) }}
+                                           </h3>
+                                        </a>
+                                       <span class="price text-muted">{{produ.currencysymbol}} {{produ.listingprice}}</span>                                     
+                                    </div> -->
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- <dir-pagination-controls max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls> -->
+                        <!--<nav aria-label="page navigation example" class="d-flex justify-content-center">
+                            <ul class="pagination pagination-custom">
+                                <li class="page-item"><a  aria-label="Previous" class="page-link"><span aria-hidden="true">Prev</span><span class="sr-only">Previous</span></a></li>
+                                <li class="page-item"><a  class="page-link active">1       </a></li>
+                                <li class="page-item"><a  class="page-link">2       </a></li>
+                                <li class="page-item"><a  class="page-link">3       </a></li>
+                                <li class="page-item"><a  class="page-link">4       </a></li>
+                                <li class="page-item"><a  class="page-link">5 </a></li>
+                                <li class="page-item"><a  aria-label="Next" class="page-link"><span aria-hidden="true">Next</span><span class="sr-only">Next     </span></a></li>
+                            </ul>
+                        </nav>-->
+                    </div>
+                    <!-- / Grid End-->
+                </div>
+            </div>
+        </main>
+    </section>
+
+      <!-- Categories Section-->
+      <section class="categories">
+        <div class="container">
+            <header class="text-center">
+                <h2 class="text-uppercase">All Category</h2>
+            </header>
+
+
+            <div class="row text-left">
+                <div class="col-lg-4 mt-4" *ngFor="let ct of category_list">
+                    <a type="button" (click)="get_category_page(ct)">
+                        <div style="background-image: url({{imageBaseUrl}}{{ct.imageurl}});" class="item d-flex align-items-end" >
+
+                        </div>
+                         <!--<div class="item"><img src="{{ct.imageurl}}" ></div>-->
+                        <div class="content">
+                            <h3><span>{{ct.categoryname}}</span></h3>
+                        </div>
+                    </a>
+
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+    <!-- <section class="categories">
+        <div class="container">
+          <header class="text-center">
+            <h2 class="text-uppercase"><small>Top for this month</small>Our Featured Picks</h2>
+          </header>
+          <div class="row text-left">
+            <div class="col-lg-4"><a >
+                <div style="background-image:url(assets/img/banner-1.jpg);" class="item d-flex align-items-end">
+                  <div class="content">
+                    <h3 class="h5">Men's</h3><span>New Collection</span>
+                  </div>
+                </div></a></div>
+            <div class="col-lg-4"><a >
+                <div style="background-image:url(assets/img/banner-2.jpg);" class="item d-flex align-items-end">
+                  <div class="content">
+                    <h3 class="h5">Women's</h3><span>New Collection</span>
+                  </div>
+                </div></a></div>
+            <div class="col-lg-4"><a >
+                <div style="background-image:url(assets/img/banner-3.jpg);" class="item d-flex align-items-end">
+                  <div class="content">
+                    <h3 class="h5">Accessories</h3><span>Sale of 20%</span>
+                  </div>
+                </div></a></div>
+          </div>
+        </div>
+      </section> -->
+      <!--Most Selling -->
+      <section class="women-collection" *ngIf="most_selling_list.length>0">
+        <div class="container">
+          <header class="text-center">
+            <h2 class="text-uppercase"><small></small>Most Selling</h2>
+          </header>
+          <!-- Products Slider-->
+          <owl-carousel-o [options]="SliderSetting" >
+            <ng-container *ngFor="let sel of most_selling_list" class="owl-carousel owl-theme products-slider" >
+              <ng-template id="slide.id" carouselSlide  >
+                <div class="item">
+                  <div class="product is-gray">
+                    <div class="image d-flex align-items-center justify-content-center"><img [src]="imageBaseUrl+sel.imagepath" alt="product" class="img-fluid">
+                      <div class="hover-overlay d-flex align-items-center justify-content-center">
+                        <div class="CTA d-flex align-items-center justify-content-center"><a (click)="add_to_cart(sel)" class="add-to-cart"><i class="fa fa-shopping-cart"></i></a>
+
+                          <a [routerLink]="['/app/home/itemdetails/',sel.itemid]" class="visit-product active">
+                            <i class="icon-search"></i>View</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="title">                         
+                      <a type="button" [routerLink]="['/app/home/itemdetails/',sel.itemid]">
+                           <h3 class="h6 text-uppercase no-margin-bottom" >
+                              {{ (sel.itemname.length>30)? (sel.itemname | slice:0:30)+'....':(sel.itemname) }}
+                          </h3>
+                      </a>
+                      <span class="price text-muted"><del>{{sel.v_mrp|currency:'INR'}}</del> {{sel.listingprice|currency:'INR'}}</span>
+                  </div>
+
+                  </div>
+                </div>
+              </ng-template>
+
+        
+
+
+            </ng-container>
+          </owl-carousel-o>
+        </div>
+      </section>
+
+
+        <!--Most Selling -->
+        <section class="women-collection" *ngIf="most_updated_list.length>0">
+          <div class="container">
+            <header class="text-center">
+              <h2 class="text-uppercase"><small></small>New Arrival</h2>
+            </header>
+            <!-- Products Slider-->
+            <owl-carousel-o [options]="SliderSetting" >
+              <ng-container *ngFor="let sel of most_updated_list" class="owl-carousel owl-theme products-slider" >
+                <ng-template id="slide.id" carouselSlide  >
+                  <div class="item">
+                    <div class="product is-gray">
+                      <div class="image d-flex align-items-center justify-content-center"><img [src]="imageBaseUrl+sel.imagepath" alt="product" class="img-fluid">
+                        <div class="hover-overlay d-flex align-items-center justify-content-center">
+                          <div class="CTA d-flex align-items-center justify-content-center"><a (click)="add_to_cart(sel)" class="add-to-cart"><i class="fa fa-shopping-cart"></i></a>
+  
+                            <a [routerLink]="['/app/home/itemdetails/',sel.itemid]" class="visit-product active">
+                              <i class="icon-search"></i>View</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="title">                         
+                        <a type="button" [routerLink]="['/app/home/itemdetails/',sel.itemid]">
+                             <h3 class="h6 text-uppercase no-margin-bottom" >
+                                {{ (sel.itemname.length>30)? (sel.itemname | slice:0:30)+'....':(sel.itemname) }}
+                            </h3>
+                        </a>
+                        <span class="price text-muted"><del>{{sel.v_mrp|currency:'INR'}}</del> {{sel.listingprice|currency:'INR'}}</span>
+                    </div>
+  
+                    </div>
+                  </div>
+                </ng-template>
+  
+          
+  
+  
+              </ng-container>
+            </owl-carousel-o>
+          </div>
+        </section>
+
+
+        <!--Casual Shoes Collection -->
+        <section class="women-collection" *ngIf="itemslist_1.length>0">
+            <div class="container">
+              <header class="text-center">
+                <h2 class="text-uppercase"><small></small>Casual Shoes</h2>
+              </header>
+              <!-- Products Slider-->
+              <owl-carousel-o [options]="SliderSetting" >
+                <ng-container *ngFor="let item1 of itemslist_1" class="owl-carousel owl-theme products-slider" >
+                  <ng-template id="slide.id" carouselSlide  >
+                    <div class="item">
+                      <div class="product is-gray">
+                        <div class="image d-flex align-items-center justify-content-center"><img [src]="imageBaseUrl+item1.itemimage" alt="product" class="img-fluid">
+                          <div class="hover-overlay d-flex align-items-center justify-content-center">
+                            <div class="CTA d-flex align-items-center justify-content-center"><a (click)="add_to_cart(item1)" class="add-to-cart"><i class="fa fa-shopping-cart"></i></a>
+
+                              <a [routerLink]="['/app/home/itemdetails/',item1.itemid]" class="visit-product active">
+                                <i class="icon-search"></i>View</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="title">                         
+                            <a type="button" [routerLink]="['/app/home/itemdetails/',item1.itemid]">
+                                 <h3 class="h6 text-uppercase no-margin-bottom" >
+                                    {{ (item1.itemname.length>30)? (item1.itemname | slice:0:30)+'....':(item1.itemname) }}
+                                </h3>
+                            </a>
+                            <span class="price text-muted"><del>{{item1.v_mrp|currency:'INR'}}</del> {{item1.listingprice|currency:'INR'}}</span>
+                        </div>
+
+                      </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </owl-carousel-o>
+            </div>
+          </section>
+
+
+        <!--Laptop Collection -->
+        <section class="women-collection" *ngIf="itemslist_2.length>0">
+            <div class="container">
+              <header class="text-center">
+                <h2 class="text-uppercase"><small></small>Laptops</h2>
+              </header>
+              <!-- Products Slider-->
+              <owl-carousel-o [options]="SliderSetting" >
+                <ng-container *ngFor="let item2 of itemslist_2" class="owl-carousel owl-theme products-slider" >
+                  <ng-template id="slide.id" carouselSlide  >
+                    <div class="item">
+                      <div class="product is-gray">
+                        <div class="image d-flex align-items-center justify-content-center"><img [src]="imageBaseUrl+item2.itemimage" alt="product" class="img-fluid">
+                          <div class="hover-overlay d-flex align-items-center justify-content-center">
+                            <div class="CTA d-flex align-items-center justify-content-center"><a (click)="add_to_cart(item2)" class="add-to-cart"><i class="fa fa-shopping-cart"></i></a>
+
+                              <a [routerLink]="['/app/home/itemdetails/',item2.itemid]" class="visit-product active">
+                                <i class="icon-search"></i>View</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="title">                         
+                          <a type="button" [routerLink]="['/app/home/itemdetails/',item2.itemid]">
+                               <h3 class="h6 text-uppercase no-margin-bottom" >
+                                  {{ (item2.itemname.length>30)? (item2.itemname | slice:0:30)+'....':(item2.itemname) }}
+                              </h3>
+                          </a>
+                          <span class="price text-muted"><del>{{item2.v_mrp|currency:'INR'}}</del> {{item2.listingprice|currency:'INR'}}</span>
+                      </div>
+
+                      </div>
+                    </div>
+                  </ng-template>
+
+            
+
+
+                </ng-container>
+              </owl-carousel-o>
+            </div>
+          </section>
+     </div>
+
+
+      <!-- Overview Popup    -->
+      <div id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade overview">
+        <div role="document" class="modal-dialog">
+          <div class="modal-content">
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="icon-close"></i></span></button>
+            <div class="modal-body">
+              <div class="ribbon-primary text-uppercase">Sale</div>
+              <div class="row d-flex align-items-center">
+                <div class="image col-lg-5"><img src="assets/img/shirt.png" alt="..." class="img-fluid d-block"></div>
+                <div class="details col-lg-7">
+                  <h2>Lose Oversized Shirt</h2>
+                  <ul class="price list-inline">
+                    <li class="list-inline-item current">$65.00</li>
+                    <li class="list-inline-item original">$90.00</li>
+                  </ul>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>
+                  <div class="d-flex align-items-center">
+                    <div class="quantity d-flex align-items-center">
+                      <div class="dec-btn">-</div>
+                      <input type="text" value="1" class="quantity-no">
+                      <div class="inc-btn">+</div>
+                    </div>
+                    <select id="size" class="bs-select">
+                      <option value="small">Small</option>
+                      <option value="meduim">Medium</option>
+                      <option value="large">Large</option>
+                      <option value="x-large">X-Large</option>
+                    </select>
+                  </div>
+                  <ul class="CTAs list-inline">
+                    <li class="list-inline-item"><a  class="btn btn-template wide"> <i class="fa fa-shopping-cart"></i>Add to Cart</a></li>
+                    <li class="list-inline-item"><a  class="visit-product active btn btn-template-outlined wide"> <i class="icon-heart"></i>Add to wishlist</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- test page -->
+
+
+

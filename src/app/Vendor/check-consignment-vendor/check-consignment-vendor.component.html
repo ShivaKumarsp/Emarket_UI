@@ -1,0 +1,258 @@
+<ngx-spinner  bdColor="rgba(51,51,51,0.8)"  size="medium"  color="#fff"  type="ball-scale-multiple">
+          <p style="font-size: 20px; color: white">Loading...</p>
+        </ngx-spinner> 
+
+        <div class="container min-vh-100">
+          <form  [formGroup]="searchForm"  novalidate>
+         <div class="row">     
+          <div class="col-lg-3">
+            <table class="table table-hover">
+              <thead>
+                  <tr>                    
+                      <th>Order Id</th>                     
+                      <th>Tracking Id</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let itm of vendor_tracking_list;let i = index">                
+                      <td ><a type="button" (click)="get_data_new(itm)">{{itm.order_id}}</a></td>   
+                      <td><a type="button" (click)="get_data_new(itm)">{{itm.tracking_id}}</a></td>
+                  </tr>
+              </tbody>
+          </table>
+          </div>             
+          <div class="col-lg-9">
+                      <div class="tab-content">
+                          <div id="product_info" class="active tab-block">                                   
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-3"> </div>
+                                    <div class="col-sm-6 col-md-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" formControlName="radiochange" type="radio" name="radiochange" id="inlineRadio1" (change)="change_details(check_radio)" [(ngModel)]="check_radio" value="Consignment">
+                                        <label class="form-check-label" for="inlineRadio1">Consignment Id</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" formControlName="radiochange"  type="radio" name="radiochange" id="inlineRadio2"  (change)="change_details(check_radio)" [(ngModel)]="check_radio" value="Tracking">
+                                        <label class="form-check-label" for="inlineRadio2">Tracking Id</label>
+                                      </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" formControlName="radiochange"  type="radio" name="radiochange" id="inlineRadio3"  (change)="change_details(check_radio)" [(ngModel)]="check_radio" value="Order">
+                                        <label class="form-check-label" for="inlineRadio3">Order Id</label>
+                                      </div>  
+                                </div>
+                            </div>
+                            <br>
+
+                              <div class="row">
+                                        <div class="col-sm-6 col-md-3"> </div>
+                                  <div class="col-sm-6 col-md-6" *ngIf="label_id!=''">
+                                      <div class="form-group">
+                                          <label class="form-label">{{label_id}}<b style="color:red">*</b></label>
+                                          <input id="manufacturing_date"  formControlName="consignmentid" type="text"
+                                          class="form-control" [(ngModel)]="consignment_id"  [ngClass]="{ 'is-invalid': submitted && f['consignmentid'].errors }">
+                                          <div *ngIf="submitted && f['consignmentid'].errors" class="invalid-feedback">
+                                            <div *ngIf="f['consignmentid'].errors['required']">Enter {{label_id}}</div> 
+                                          </div> 
+                                                                                  
+                                      </div>
+                                    
+                                      <tbody *ngIf="this.order_item_list_vendor.length>0">
+                                        <tr *ngFor="let ord of order_item_list_vendor;let i = index">                
+                                            <td ><a type="button" (click)="get_data_order(ord)">Order Id : {{ord.order_id}}</a></td> ,
+                                           &nbsp;  &nbsp; 
+                                            <td><a type="button" (click)="get_data_order(ord)">Tracking Id : {{ord.tracking_id}}</a></td>
+                                        </tr>
+                                    </tbody> 
+
+                                  </div>
+                                  <div class="col-sm-6 col-md-3">
+                                    <br>    
+                                    <div class="text-left" *ngIf="check_radio=='Order'">                                      
+                                      <a type="button" class="btn btn-primary" (click)="get_order_item()">
+                                        Get Order Item  <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                 </div>
+                               
+
+                                                   
+                              </div>
+<br>
+                             
+                        
+                              <div class="col-lg-12 mt-4">
+                                  <div class="text-center">
+                              <a type="button" class="btn btn-warning" (click)="clear()">Clear</a> &nbsp;
+                            <a *ngIf="show_btnm" type="button" class="btn btn-primary" (click)="get_data()">
+                              Get Data  <i class="fa fa-angle-right"></i>
+                                      </a>&nbsp;
+                                      <!-- <a type="button" class="btn btn-primary">
+                                        Print <i class="fa fa-angle-right"></i>
+                                        </a> -->
+                                  </div>
+                              </div>
+                        
+                         
+                              </div>
+                      </div>
+                
+              
+              <br>
+              <div class="card">
+           <div class="row" *ngIf="vendor_order_item_track.length>0"><br>
+         
+       <div class="col-md-3">
+       <b>Order Date</b> <br>{{order_date|date:'dd-MM-yyyy'}}<br>
+       <b>Order Statue</b><br>
+       {{order_status}}<br>
+       <b>Order Id</b><br>{{order_id}}
+       </div>
+       <div class="col-md-3">
+       <b>Buyer Details</b><br>{{buyer_name}}<br>
+       {{address_1+", "+address_2}}<br>
+       {{city}}<br>
+       {{state+", "+pincode}}<br>
+       {{country}}
+       </div>
+       <div class="col-md-3">
+        <b>Dispatch Details</b><br>
+        After :{{dispatch_date1|date:'dd-MM-yyyy hh:ss'}}<br>
+        By :{{dispatch_date2|date:'dd-MM-yyyy hh:ss'}}<br>
+       </div>
+       <div class="col-md-3">
+        <b>Shipping Details</b> <br>{{tracking_id}}<br> <br> <br>
+        <b>Mode Of Payment</b>   <br>{{mode_of_payment}}
+       </div>
+           </div>
+        
+              <div class="row">            
+                    <div class="steps"  style="width: 100%;" text="center" *ngIf="check_consignment_details_list_vendor.length>0">
+                      <br>
+                              <progress id="progress" class="progress-bar " role="progressbar" [style]="{'width':status_bar}" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" ></progress>
+                              <div class="step-item">                                       
+                                  <button class="btn btn-primary btn-sm btn-rounded step-button text-center" type="button" ></button><br><br>
+                                  <div class="step-title small ">
+                                 Created
+                                   </div>
+                                  <div class="step-title small ">
+                                   {{created_date|date:'dd-MM-yyyy HH:ss'}}
+                                  </div>
+                              </div>
+
+                              <div class="step-item">                                       
+                                <button class="btn btn-primary btn-sm btn-rounded step-button text-center" type="button" ></button><br><br>
+                                <div class="step-title small ">
+                              Approved
+                               </div>
+                                <div class="step-title small ">
+                                  {{approved_date|date:'dd-MM-yyyy HH:ss'}}
+                                </div>
+                            </div>
+
+                            <div class="step-item">                                       
+                              <button class="btn btn-primary btn-sm btn-rounded step-button text-center" type="button" ></button><br><br>
+                              <div class="step-title small ">
+                              Packed
+                             </div>
+                              <div class="step-title small ">
+                                {{packed_date|date:'dd-MM-yyyy HH:ss'}}
+                              </div>
+                          </div>
+
+                          <div class="step-item">                                       
+                            <button class="btn btn-primary btn-sm btn-rounded step-button text-center" type="button" ></button><br><br>
+                            <div class="step-title small ">
+                             Ready To Dispatch
+                           </div>
+                            <div class="step-title small ">
+                              {{ready_to_dispatch_date|date:'dd-MM-yyyy HH:ss'}}
+                            </div>
+                        </div>
+
+                        <div class="step-item">                                       
+                          <button class="btn btn-primary btn-sm btn-rounded step-button text-center" type="button" ></button><br><br>
+                          <div class="step-title small ">
+                           Pickup Completed
+                         </div>
+                          <div class="step-title small ">
+                             {{pickup_completed_date|date:'dd-MM-yyyy HH:ss'}}
+                          </div>
+                      </div>
+                      <div class="step-item">                                       
+                        <button class="btn btn-primary btn-sm btn-rounded step-button text-center" type="button" ></button><br><br>
+                        <div class="step-title small ">
+                        Delivered
+                       </div>
+                        <div class="step-title small ">
+                           {{delivered_date|date:'dd-MM-yyyy HH:ss'}}
+                        </div>
+                    </div>
+                          </div>
+              </div>
+            </div>
+            <br>
+<div class="card">
+              <div class="row" *ngIf="vendor_order_item_track_details.length>0"><br>
+         
+                <div class="col-md-3">
+                  <img src="{{imageBaseUrl+image_url}}" alt="..." class="img-fluid">
+              
+                </div>
+                <div class="col-md-3">
+                <b>Item Name :</b><br>{{item_name}}<br>
+               
+                </div>
+                <div class="col-md-3">
+                 <b>SKU :</b><br>
+                  {{sku}}<br>
+               
+                </div>
+                <div class="col-md-3">
+                 <b>HSN: </b> <br>{{hsn}}<br>
+             
+                </div>
+                
+                    </div>
+                    <hr>
+                    <div class="row" *ngIf="vendor_order_item_track_price_details.length>0"><br>
+         
+                      <div class="col-md-3">  
+                          <div class="block">
+                              <div class="block-body">
+                                  <p>Price & Quantity</p>
+                                  <ul class="order-menu list-unstyled">
+                                      <li class="d-flex justify-content-between"><span>Quantity</span><strong> {{quantity}} unit(s)</strong></li>
+                                      <li class="d-flex justify-content-between"><span>Value</span><strong>₹ {{selling_price-gst_total}}</strong></li>
+                                      <li class="d-flex justify-content-between"><span>Shipping</span><strong>₹ {{shipping_price}}</strong></li>
+                                      <li class="d-flex justify-content-between"><span>Total</span><strong>₹ {{total_price-gst_total| number}}</strong></li>
+                                  </ul>
+                              </div>
+                          </div>
+                   
+                      </div>
+                      <div class="col-md-3">
+                        <div class="block-body">
+                          <p>Tax Breakup</p>
+                          <ul class="order-menu list-unstyled">
+                              <li class="d-flex justify-content-between"><span>SGST</span><strong> ₹ {{sgst}} </strong></li>
+                              <li class="d-flex justify-content-between"><span>CGST</span><strong>₹ {{cgst}}</strong></li>
+                              <li class="d-flex justify-content-between"><span>IGST</span><strong>₹ {{igst}}</strong></li>
+                              <li class="d-flex justify-content-between"><span>Total</span><strong>₹ {{gst_total| number}}</strong></li>
+                          </ul>
+                      </div>               
+                      </div>                    
+                  </div>
+                  <div  class="row"> 
+                    <div class="col-md-6 block-body">
+                     <span >&nbsp; &nbsp;Total Amount : &nbsp;</span><strong class="text-primary price-total"> ₹ {{total_price| number}} </strong>
+                     </div>
+                  </div>
+                       
+      </div>
+    </div>
+  </div>
+</form>
+</div> 
+
+
+          

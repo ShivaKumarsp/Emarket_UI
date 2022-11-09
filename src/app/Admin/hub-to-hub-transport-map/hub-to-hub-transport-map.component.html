@@ -1,0 +1,377 @@
+<div class="my-4 min-vh-100">
+  <div class="container ">
+    <div class="my-3">
+      <h5>Hub and Transpotation Mapping</h5>
+    </div>
+    <div class="row g-0">
+      <div class="col-3 card card-body btn p-1 shadow shadow-sm" [ngClass]="{activeTab: page==1}" (click)="page=1">
+        <p class="small p-0"> <strong><i class="fa fa-check-square-o"></i>Hub-Transport Map</strong></p>
+      </div>
+      <div class="col-3 card card-body btn p-1 shadow shadow-sm" [ngClass]="{activeTab: page==2}" (click)="page=2">
+        <p class="small p-0"> <strong><i class="fa fa-check-square-o"></i> Hub- to-Hub Transport Map</strong></p>
+      </div>
+
+    </div>
+
+
+    <div class="my-3" [ngSwitch]="page">
+
+      <div class="card rounded-0 shadow shadow-sm" *ngSwitchCase="1">
+        <div class="card-header">
+          hub transportation Map
+        </div>
+
+        <div class="card-body">
+          <div [formGroup]="hubtrans">
+            <div class="row">
+              <!-- <div class="col-md-4 p-1">
+                <label for="state" class="form-label p-0">Country<b style="color:red ;">*</b></label>
+                <select formControlName="country" class="form-select form-select-sm" [(ngModel)]="country_id"
+                  (change)="get_state(country_id)" [ngClass]="{ 'is-invalid': submitted && f['country'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let country of country_list" [value]="country.countryid">
+                    {{country.countryname}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f['country'].errors" class="invalid-feedback">
+                  <div *ngIf="f['country'].errors['required']">Select country</div>
+                </div>
+              </div>
+
+              <div class="col-md-4 p-1">
+                <label for="state" class="form-label p-0">State<b style="color:red ;">*</b></label>
+                <select formControlName="state" class="form-select form-select-sm" [(ngModel)]="state_id"
+                  (change)="get_city(state_id)" [ngClass]="{ 'is-invalid': submitted && f['state'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let state of state_list" [value]="state.stateid">
+                    {{state.statename}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f['state'].errors" class="invalid-feedback">
+                  <div *ngIf="f['state'].errors['required']">Select State</div>
+                </div>
+              </div>
+
+
+              <div class="col-md-4 p-1">
+                <label for="city" class="form-label p-0">City<b style="color:red ;">*</b></label>
+                <select formControlName="city" class="form-select form-select-sm" [(ngModel)]="city_id"
+                  (change)="get_pincode(city_id)" [ngClass]="{ 'is-invalid': submitted && f['city'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let city of city_list" [value]="city.cityid">
+                    {{city.cityname}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f['city'].errors" class="invalid-feedback">
+                  <div *ngIf="f['city'].errors['required']">Select City</div>
+                </div>
+              </div>
+
+              <div class="col-md-4 p-1">
+                <label for="city" class="form-label p-0">Pincode<b style="color:red ;">*</b></label>
+                <select formControlName="Pincode" class="form-select form-select-sm" [(ngModel)]="pincode_id"
+                  [ngClass]="{ 'is-invalid': submitted && f['Pincode'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let pin of pincode_list" [value]="pin.in_pincode_id">
+                    {{pin.in_pincode}}|{{pin.in_area}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f['Pincode'].errors" class="invalid-feedback">
+                  <div *ngIf="f['Pincode'].errors['required']">Select Pincode</div>
+                </div>
+              </div> -->
+
+              <div class="col-md-4 p-1 mb-3">
+                <label for="hname" class="form-label P-0">Hub Name<b style="color:red">*</b></label>
+                <select class="form-control form-select-sm" formControlName="hub_name" [(ngModel)]="hub_id"
+                  [ngClass]="{ 'is-invalid': submitted && f['hub_name'].errors }" required>
+                  <option value="">-- Select Hub --</option>
+                  <option *ngFor="let hub of hub_list" [ngValue]="hub.hubid">
+                    {{hub.hubname}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f['hub_name'].errors" class="invalid-feedback">
+                  <div *ngIf="f['hub_name'].errors['required']">Please select Hub Name</div>
+                </div>
+              </div>
+
+              <div class="col-md-4 p-1">
+                <label class="form-label p-0">Hub Transport<b style="color:red">*</b></label>
+                <select class="form-control form-select-sm" [(ngModel)]="transport_mode_id"
+                  formControlName="transport_mode" [ngClass]="{ 'is-invalid': submitted && f['transport_mode'].errors }"
+                  required>
+                  <option value="">-- Select Transport --</option>
+                  <option *ngFor="let tlist of transportation_list" [ngValue]="tlist.transport_modeid">
+                    {{tlist.transport_modename}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && f['transport_mode'].errors" class="invalid-feedback">
+                  <div *ngIf="f['transport_mode'].errors['required']">Please Select Transportation Mode</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button class="btn btn-success" (click)="save_hub_transport()">Save</button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover small">
+                <thead>
+                  <tr>
+                    <th>SL No</th>
+                    <th>Hub Name</th>
+                    <th>Tranport Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <!-- {{hub_transpotation_list|json}} -->
+                <tbody>
+
+                  <tr
+                    *ngFor="let ht of hub_transpotation_list| filter:search | paginate: {itemsPerPage: tableSize, currentPage: pages1, totalItems: count};let i = index;">
+                    <td>{{tableSize *(page-1)+i+1}}</td>
+                    <td>{{ht.hub_name}}</td>
+                    <td>{{ht.transport_mode_name}}</td>
+                    
+                    <td> <button class="btn btn-sm btn-primary" style="background-color:rgb(236, 125, 34);"
+                        (click)="delete_hub_transport(ht.hub_txr_id)">Delete</button></td>
+                    <td> <button class="btn btn-sm btn-primary"
+                      (click)="edit_hub_transport(ht)">Edit</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-center">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+
+
+
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card rounded-0 shadow shadow-sm" *ngSwitchCase="2">
+        <div class="card-header">
+          Hub To Hub  Mapping
+        </div>
+        <div class="card-body">
+          <div [formGroup]="hubtohubtrans">
+            <div class="row">
+             
+              <!-- <div class="col-md-4 p-1">
+                <label for="state" class="form-label p-0">Country<b style="color:red ;">*</b></label>
+                <select formControlName="country" class="form-select form-select-sm" [(ngModel)]="scountry_id"
+                  (change)="get_state1(scountry_id)" [ngClass]="{ 'is-invalid': submitted && g['country'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let country of country_list" [value]="country.countryid">
+                    {{country.countryname}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['country'].errors" class="invalid-feedback">
+                  <div *ngIf="g['country'].errors['required']">Select country</div>
+                </div>
+              </div>
+
+              <div class="col-md-4 p-1">
+                <label for="state" class="form-label p-0">State<b style="color:red ;">*</b></label>
+                <select formControlName="state" class="form-select form-select-sm" [(ngModel)]="sstate_id"
+                  (change)="get_city1(sstate_id)" [ngClass]="{ 'is-invalid': submitted && g['state'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let state of sstate_list" [value]="state.stateid">
+                    {{state.statename}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['state'].errors" class="invalid-feedback">
+                  <div *ngIf="g['state'].errors['required']">Select State</div>
+                </div>
+              </div>
+
+
+              <div class="col-md-4 p-1">
+                <label for="city" class="form-label p-0">City<b style="color:red ;">*</b></label>
+                <select formControlName="city" class="form-select form-select-sm" [(ngModel)]="scity_id"
+                  (change)="get_pincode1(scity_id)" [ngClass]="{ 'is-invalid': submitted && g['city'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let city of scity_list" [value]="city.cityid">
+                    {{city.cityname}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['city'].errors" class="invalid-feedback">
+                  <div *ngIf="g['city'].errors['required']">Select City</div>
+                </div>
+              </div>
+
+              <div class="col-md-4 p-1">
+                <label for="city" class="form-label p-0">Pincode<b style="color:red ;">*</b></label>
+            
+                <select formControlName="Pincode" class="form-select form-select-sm" [(ngModel)]="spincode_id"
+                  [ngClass]="{ 'is-invalid': submitted && g['Pincode'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let pin of spincode_list" [value]="pin.in_pincode_id">
+                    {{pin.in_pincode}}|{{pin.in_area}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['Pincode'].errors" class="invalid-feedback">
+                  <div *ngIf="g['Pincode'].errors['required']">Select Pincode</div>
+                </div>
+              </div> -->
+
+              <div class="col-md-4 P-1">
+                <label for="hname" class="form-label">Source Hub Name<b style="color:red">*</b></label>
+                <select class="form-control form-control-sm" formControlName="shub_name" [(ngModel)]="source_hub_id"
+                  (change)="get_hub(source_hub_id)" placeholder="select Hub Name"
+                  [ngClass]="{ 'is-invalid': submitted && g['shub_name'].errors }" required>
+                  <option value="">-- Select Hub --</option>shub_name
+                  <option *ngFor="let hub of hub_list" [ngValue]="hub.hubid">
+                    {{hub.hubname}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['shub_name'].errors" class="invalid-feedback">
+                  <div *ngIf="g['shub_name'].errors['required']">Please select Hub Name</div>
+                </div>
+              </div>
+             
+              <div class="col-md-4 p-1">
+                <label for="hname" class="form-label p-0">Destination Hub Name<b style="color:red">*</b></label>
+                <select class="form-control form-select-sm" formControlName="dhub_name" [(ngModel)]="destination_hub_id"
+                  [ngClass]="{ 'is-invalid': submitted && g['dhub_name'].errors }" required>
+                  <option value="">-- Select Destination Hub --</option>
+                  <option *ngFor="let hub of dhub_list" [ngValue]="hub.hub_id">
+                    {{hub.hub_name}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['dhub_name'].errors" class="invalid-feedback">
+                  <div *ngIf="g['dhub_name'].errors['required']">Please Enter Destination Hub Name</div>
+                </div>
+              </div>
+
+            
+<!-- 
+              <div class="col-md-4 p-1">
+                <label for="state" class="form-label p-0">Country<b style="color:red ;">*</b></label>
+                <select formControlName="country1" class="form-select form-select-sm" [(ngModel)]="dcountry_id"
+                  (change)="get_state2(dcountry_id)" [ngClass]="{ 'is-invalid': submitted && g['country1'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let country of country_list" [value]="country.countryid">
+                    {{country.countryname}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['country1'].errors" class="invalid-feedback">
+                  <div *ngIf="g['country1'].errors['required']">Select country</div>
+                </div>
+              </div>
+
+              <div class="col-md-4 p-1">
+                <label for="state" class="form-label p-0">State<b style="color:red ;">*</b></label>
+                <select formControlName="state1" class="form-select form-select-sm" [(ngModel)]="dstate_id"
+                  (change)="get_city2(dstate_id)" [ngClass]="{ 'is-invalid': submitted && g['state1'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let state of dstate_list" [value]="state.stateid">
+                    {{state.statename}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['state1'].errors" class="invalid-feedback">
+                  <div *ngIf="g['state1'].errors['required']">Please Select State</div>
+                </div>
+              </div>
+
+
+              <div class="col-md-4 p-1">
+                <label for="city" class="form-label p-0">City<b style="color:red ;">*</b></label>
+                <select formControlName="city1" class="form-select form-select-sm" [(ngModel)]="dcity_id"
+                  (change)="get_pincode2(dcity_id)" [ngClass]="{ 'is-invalid': submitted && g['city1'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let city of dcity_list" [value]="city.cityid">
+                    {{city.cityname}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['city1'].errors" class="invalid-feedback">
+                  <div *ngIf="g['city1'].errors['required']">Please Select City</div>
+                </div>
+              </div>
+
+              <div class="col-md-4 p-1">
+                <label for="city" class="form-label p-0">Pincode<b style="color:red ;">*</b></label>
+                <select formControlName="Pincode1" class="form-select form-select-sm" [(ngModel)]="dpincode_id"
+                  [ngClass]="{ 'is-invalid': submitted && g['Pincode1'].errors }">
+                  <option value="">Choose...</option>
+                  <option *ngFor="let pin of dpincode_list" [value]="pin.in_pincode_id">
+                    {{pin.in_pincode}}|{{pin.in_area}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['Pincode1'].errors" class="invalid-feedback">
+                  <div *ngIf="g['Pincode1'].errors['required']">Please Select Pincode</div>
+                </div>
+              </div> -->
+
+              <!-- <div class="col-md-4 p-1">
+                <label for="hname" class="form-label p-0">Destination Hub Name<b style="color:red">*</b></label>
+                <select class="form-control form-select-sm" formControlName="dhub_name" [(ngModel)]="destination_hub_id"
+                  [ngClass]="{ 'is-invalid': submitted && g['dhub_name'].errors }" required>
+                  <option value="">-- Select Destination Hub --</option>
+                  <option *ngFor="let hub of dhub_list" [ngValue]="hub.hub_id">
+                    {{hub.hub_name}}
+                  </option>
+                </select>
+                <div *ngIf="submitted && g['dhub_name'].errors" class="invalid-feedback">
+                  <div *ngIf="g['dhub_name'].errors['required']">Please Enter Destination Hub Name</div>
+                </div>
+
+              </div> -->
+            </div>
+            <div class="text-center">
+              
+              <button class="btn btn-primary my-3" (click)="save_hub_to_hub_transport()">Save</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover small">
+            <thead>
+              <tr>
+                <th>SL No</th>
+                <th>Source Hub Name</th>  
+                <th>Destination Hub Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <!-- {{hub_to_hub_list[0]|json}} -->
+            <tbody>
+
+              <tr
+                *ngFor="let ht of hub_to_hub_list| filter:search | paginate: {itemsPerPage: tableSize2, currentPage: pages2, totalItems: count2};let i = index;">
+                <td>{{tableSize2 *(pages2-1)+i+1}}</td>
+                <td>{{ht.source_hub_name}}</td>
+                <td>{{ht.destination_hub_name}}</td>
+         
+
+                <td> <button class="btn btn-sm btn-primary" style="background-color:rgb(236, 125, 34);"
+                   (click)="delete_hub_to_hub_transport(ht.hub_to_hub_txr_id)">Delete</button></td>
+                <td> <button class="btn btn-sm btn-primary" (click)="edit_hub_to_hub_transport(ht)"
+                  >Edit</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange1($event);page=2">
+            </pagination-controls>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div *ngFor="let item of validation_list">
+      {{item}}
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,12 @@
+img {
+          max-width: 260px;
+          height: 119%;
+      }
+
+      .product .image {
+          position: relative;
+          background: #fff;
+          padding: 20px;
+          height: 199px;
+          width: 101%;
+      }

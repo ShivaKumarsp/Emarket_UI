@@ -1,0 +1,135 @@
+<ngx-spinner  bdColor="rgba(51,51,51,0.8)"  size="medium"  color="#fff"  type="ball-scale-multiple">
+          <p style="font-size: 20px; color: white">Loading...</p>
+        </ngx-spinner> 
+
+        <div class="container min-vh-100">
+         <div class="row">                  
+                  <div class="col-lg-12">
+                      <div class="tab-content">
+                          <div id="product_info" class="active tab-block">
+                              <form  [formGroup]="searchForm"  novalidate>
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-3"> </div>
+                                    <div class="col-sm-6 col-md-6">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" formControlName="radiochange" type="radio" name="inlineRadioOptions" id="inlineRadio1" (change)="change_details(check_radio)" [(ngModel)]="check_radio" value="Consignment">
+                                        <label class="form-check-label" for="inlineRadio1">Consignment Id</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" formControlName="radiochange"  type="radio" name="inlineRadioOptions" id="inlineRadio2"  (change)="change_details(check_radio)" [(ngModel)]="check_radio" value="Tracking">
+                                        <label class="form-check-label" for="inlineRadio2">Tracking Id</label>
+                                      </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" formControlName="radiochange"  type="radio" name="inlineRadioOptions" id="inlineRadio3"  (change)="change_details(check_radio)" [(ngModel)]="check_radio" value="Order">
+                                        <label class="form-check-label" for="inlineRadio3">Order Id</label>
+                                      </div>  
+                                </div>
+                            </div>
+                            <br>
+                          
+
+
+                              <div class="row">
+                                        <div class="col-sm-6 col-md-3"> </div>
+                                  <div class="col-sm-6 col-md-6" *ngIf="label_id!=''">
+                                      <div class="form-group">
+                                          <label class="form-label">{{label_id}}<b style="color:red">*</b></label>
+                                          <input id="manufacturing_date"  formControlName="consignmentid" type="text"
+                                          class="form-control" [(ngModel)]="consignment_id"  [ngClass]="{ 'is-invalid': submitted && f['consignmentid'].errors }">
+                                          <div *ngIf="submitted && f['consignmentid'].errors" class="invalid-feedback">
+                                            <div *ngIf="f['consignmentid'].errors['required']">Enter {{label_id}}</div> 
+                                          </div> 
+                                                                                  
+                                      </div>
+                                    
+                                  </div>
+                                  <div class="col-sm-6 col-md-3">
+                                    <br>    
+                                    <div class="text-left" *ngIf="check_radio=='Order'">                                      
+                                      <a type="button" class="btn btn-primary" (click)="get_order_item()">
+                                        Get Order Item  <i class="fa fa-angle-right"></i>
+                                        </a>                                        
+                                    </div>
+                                 </div>
+                                                         
+                              </div>
+
+                              <div class="row">
+                                <div class="col-sm-6 col-md-3"> </div>
+                                <div class="col-sm-6 col-md-6">
+                                <div class="form-check form-check-inline" *ngFor="let radio of order_item_list">
+                                    <input class="form-check-input" formControlName="radioitem" type="radio"  id="inlineRadio4"  [(ngModel)]="radio_item" value="{{radio.item_id}}" [ngClass]="{ 'is-invalid': submitted && f['radioitem'].errors }">
+                                    <label class="form-check-label" for="inlineRadio4">Item Id/Consignment/Tracking Id : &nbsp;{{radio.item_id}}/{{radio.consignment_id}}/{{radio.tracking_id}}</label>      
+                                  </div>
+                                  <div *ngIf="submitted && f['radioitem'].errors" class="invalid-feedback">
+                                    <div *ngIf="f['radioitem'].errors['required']">Select One Items</div> 
+                                  </div>  
+                            </div>
+                        </div>
+                        
+                              <div class="col-lg-12 mt-4">
+                                  <div class="text-center">
+                              <a type="button" class="btn btn-warning" (click)="clear()">Clear</a> &nbsp;
+                            <a *ngIf="show_btnm" type="button" class="btn btn-primary" (click)="get_data()">
+                              Get Data  <i class="fa fa-angle-right"></i>
+                                      </a>&nbsp;
+                                      <!-- <a type="button" class="btn btn-primary">
+                                        Print <i class="fa fa-angle-right"></i>
+                                        </a> -->
+                                  </div>
+                              </div>
+                        
+                          </form>
+                              </div>
+                      </div>
+                  </div> 
+              </div>
+              <div class="row" *ngIf="check_consignment_details_list.length>0">
+                    <div class="col-lg-12">
+                        <div class="tab-content">
+                            <h5 class="my-4">Consignment Details</h5>
+                            <!-- <div class="col-md-4" style="float: right">
+                                <input class="form-control form-control-sm" type="text" [(ngModel)]="search" placeholder="search here...">
+                            </div> -->
+                            <table class="table table-hover table-responsive-md small">
+                                <thead>
+                                    <tr>
+                                        <th>SL No</th>
+                                        <th>Status</th>
+                                        <th>Updated By</th>
+                                        <th>Updated On</th>
+                                        <!-- <th>Vendor/DE/FC/Hub</th> -->
+                                   
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                        <tr *ngFor="let pro of check_consignment_details_list |filter:search| paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count};let i = index">
+                                        <th>{{tableSize *(page-1)+i+1}}</th>
+                                        <td>{{pro.status}}</td>
+                                        <td>{{pro.username}}</td>
+                                        <td>{{pro.updated_on|date:'dd-MM-yyyy HH:ss'}}</td>
+                                     
+                                        
+                                      
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-center">
+                                <pagination-controls
+                                  previousLabel="Prev"
+                                  nextLabel="Next"
+                                  (pageChange)="onTableDataChange($event)"
+                                >
+                                </pagination-controls>
+                              </div>
+                        </div>
+                    </div>
+
+                </div>
+      </div>
+
+
+
+          

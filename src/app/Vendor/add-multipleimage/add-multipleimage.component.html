@@ -1,0 +1,117 @@
+
+<section class="checkout min-vh-100">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 mb-4">
+              <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link " >Add Item</a></li>
+                  <li class="nav-item"><a class="nav-link ">Item Specification </a></li>
+                  <li class="nav-item"><a class="nav-link ">Item Feature </a></li>
+                  <li class="nav-item"><a class="nav-link active">Add images</a></li>
+              </ul>
+          </div>
+          <div class="col-md-12">
+
+              <div class="tab-content">
+                  <div id="images" class="active tab-block">
+
+                    <div [formGroup]="imageform" hidden>
+                      <div class="form-group col-md-6 p-4">
+                        <label for="img" class="p-2">Select Images </label>
+                        <!-- formControlName="File"  -->
+                        <input type="file" accept="image/*" formControlName="itemimage" [(ngModel)]="item_image" (change)="VendorImageUpload(imageInput,'Image3')" #imageInput id="img" [ngClass]="{ 'is-invalid': submitted && f['File'].errors }">
+                        <div *ngIf="submitted && f['File'].errors" class="invalid-feedback">
+                            <div *ngIf="f['File'].errors['required']">Upload Image</div>
+                          </div>
+                    </div>
+                    <div class="text-center p-2">
+                      <button type="button" class="btn btn-success" id="fileImage" (click)="saveimage()">Save</button>
+                    </div>
+                  </div>
+              
+
+                  <table  class="table table-bordered" [formGroup]="imageform">
+                    <thead>
+                      <tr> 
+                        <th>Image</th>
+                        <th>Upload<b style="color: red;">*</b></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td> 
+                        <a  class="d-inline-block" *ngIf="p_image_1!='' && p_image_1!=null">
+                          <img  src="{{imageBaseUrl+p_image_1}}" class="img-fluid rounded-circle customer-image"
+                          [style]="{'width':'200px','height':'120px'}">
+                     </a>
+                     <a *ngIf="p_image_1==''|| p_image_1==null">
+                         <img  src="assets/img/profile.png" class="img-fluid rounded-circle customer-image"
+                         [style]="{'width':'200px','height':'120px'}">
+                     </a>
+
+                      </td>
+                      <td>
+                     
+                        <input type="file" accept="image/*" formControlName="itemimage1" [(ngModel)]="p_image_1" (change)="VendorImageUpload(imageInput1,'image1')" #imageInput1 id="img" [ngClass]="{ 'is-invalid': submitted && f['itemimage1'].errors }">
+                        <div *ngIf="submitted && f['itemimage1'].errors" class="invalid-feedback">
+                            <div *ngIf="f['itemimage1'].errors['required']">Upload Image</div>
+                          </div>
+                      </td>                  
+                    </tr>
+                    <tr>
+                      <td> 
+                        <a  class="d-inline-block" *ngIf="p_image_2!='' && p_image_2!=null">
+                          <img  src="{{imageBaseUrl+p_image_2}}" class="img-fluid rounded-circle customer-image"
+                          [style]="{'width':'200px','height':'120px'}">
+                     </a>
+                     <a *ngIf="p_image_2==''|| p_image_2==null">
+                         <img  src="assets/img/profile.png" class="img-fluid rounded-circle customer-image"
+                         [style]="{'width':'200px','height':'120px'}">
+                     </a>
+
+                      </td>
+                      <td>
+                     
+                        <input type="file" accept="image/*" formControlName="itemimage2" [(ngModel)]="p_image_2" (change)="VendorImageUpload(imageInput2,'image2')" #imageInput2 id="img" [ngClass]="{ 'is-invalid': submitted && f['itemimage2'].errors }">
+                        <div *ngIf="submitted && f['itemimage2'].errors" class="invalid-feedback">
+                            <div *ngIf="f['itemimage2'].errors['required']">Upload Image</div>
+                          </div>
+                      </td>                  
+                    </tr>
+                    <tr>
+                      <td> 
+                        <a  class="d-inline-block" *ngIf="p_image_3!='' && p_image_3!=null">
+                          <img  src="{{imageBaseUrl+p_image_3}}" class="img-fluid rounded-circle customer-image"
+                          [style]="{'width':'200px','height':'120px'}">
+                     </a>
+                     <a *ngIf="p_image_3==''|| p_image_3==null">
+                         <img  src="assets/img/profile.png" class="img-fluid rounded-circle customer-image"
+                         [style]="{'width':'200px','height':'120px'}">
+                     </a>
+
+                      </td>
+                      <td>
+                     
+                        <input type="file" accept="image/*" formControlName="itemimage3" [(ngModel)]="p_image_3" (change)="VendorImageUpload(imageInput3,'image3')" #imageInput3 id="img" [ngClass]="{ 'is-invalid': submitted && f['itemimage3'].errors }">
+                        <div *ngIf="submitted && f['itemimage3'].errors" class="invalid-feedback">
+                            <div *ngIf="f['itemimage3'].errors['required']">Upload Image</div>
+                          </div>
+                      </td>                  
+                    </tr>
+
+                    </tbody>
+
+                  </table>
+
+
+                  <div class="row" >
+                    <div class="text-center p-2">
+                      <button type="button" class="btn btn-success" id="fileImage" (click)="saveimage()">Save</button>
+                    </div>
+                  </div>
+
+
+                  </div>
+              </div>
+          </div>
+

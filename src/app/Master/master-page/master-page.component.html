@@ -1,0 +1,151 @@
+
+
+
+<section class="hero hero-page gray-bg padding-small">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-lg-9 order-2 order-lg-1">
+                <h1>Add Master Page</h1>
+            </div>
+            <div class="col-lg-3 text-right order-1 order-lg-2">
+                <ul class="breadcrumb justify-content-lg-end">
+                    <li class="breadcrumb-item"><a >Home</a></li>
+                    <li class="breadcrumb-item active">Master Page</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="checkout">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="nav-link active">Master Page</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/app/master_module">Master Module</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/app/map_role_map_page" >Map Role With Module & Page</a></li>
+
+                </ul>
+            </div>
+        </div>
+
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="tab-content">
+                        <div id="product_info" class="active tab-block">
+                            <form [formGroup]="form"    novalidate>
+                            <div class="row">
+
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Page Name<b style="color:red">*</b></label>
+                                        <input type="text" class="form-control" formControlName="pagename" [(ngModel)]="mp_pagename"
+                                        placeholder="Enter Page Name" required [ngClass]="{ 'is-invalid': submitted && f['pagename'].errors }"/>
+                                        <div *ngIf="submitted && f['pagename'].errors" class="invalid-feedback">
+                                            <div *ngIf="f['pagename'].errors['required']">Enter Page Name</div>
+                                                     </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Page URL<b style="color:red">*</b></label>
+                                        <input type="text" class="form-control" name="catname" formControlName="pageurl" [(ngModel)]="mp_pageurl"
+                                        placeholder="Enter Page URL" required [ngClass]="{ 'is-invalid': submitted && f['pageurl'].errors }" />
+                                        <div *ngIf="submitted && f['pageurl'].errors" class="invalid-feedback">
+                                            <div *ngIf="f['pageurl'].errors['required']">Enter Page URL</div>
+                                          </div>
+                                    </div>
+                                </div>
+                              
+
+                            
+                            </div>
+
+                          
+
+
+                            <div class="col-lg-12 mt-4">
+                                <div class="text-center">
+                                    <input type="text" [(ngModel)]="mp_id" hidden />
+                                    <a type="button" class="btn btn-template wide next" (click)="Clear()">
+                                        Clear<i class="fa fa-angle-right"></i>
+                                    </a> &nbsp;
+                                    <a type="button" class="btn btn-template wide next"  (click)="savedata()">
+                                        Save<i class="fa fa-angle-right"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                        </form>
+                            </div>
+                    </div>
+                </div>
+
+
+            </div>
+          
+    </div>
+    <div class="container">
+        <div class="col-lg-12">
+
+            <div class="tab-content">
+
+                <h5 class="my-4">Page List</h5>
+                <div class="col-md-4" style="float: right">
+                    <input class="form-control form-control-sm" type="text" [(ngModel)]="search" placeholder="search here...">
+                </div>
+                <table class="table table-hover table-responsive-md small">
+                    <thead>
+                        <tr>
+                            <th>SL No</th>
+                            <th>Page Name</th>
+                            <th>Page URL</th>
+                            <th>Action</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                            <tr *ngFor="let pro of page_list| filter:search | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count};let i = index; filter:search">
+                                <th>{{tableSize *(page-1)+i+1}}</th>
+                            <td>{{pro.mp_pagename}}</td>
+                            <td>{{pro.mp_pageurl}}</td>
+                            <td>
+                                <a (click)="active_deactive(pro)" type="button"> 
+                                 <span  style="cursor: pointer;"  class="badge bg-warning" *ngIf="pro.mp_activeflg==true">
+                                    DE-Active</span>
+                                </a>
+                                   
+                                <a (click)="active_deactive(pro)" type="button"> 
+                                    <span  style="cursor: pointer;"  class="badge bg-primary" *ngIf="pro.mp_activeflg==false">
+                                       Active</span>
+                                   </a>
+                                   &nbsp;| &nbsp;
+                                <a class="btn btn-primary btn-sm" (click)="edit_page(pro)"><i class="fa fa-edit"></i></a> 
+                  
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-center">
+                    <pagination-controls
+                      previousLabel="Prev"
+                      nextLabel="Next"
+                      (pageChange)="onTableDataChange($event)"
+                    >
+                    </pagination-controls>
+                  </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+

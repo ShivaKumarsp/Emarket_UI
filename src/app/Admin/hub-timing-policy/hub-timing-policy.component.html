@@ -1,0 +1,195 @@
+<section class="hero hero-page gray-bg padding-small">
+          <div class="container">
+              <div class="row d-flex">
+                  <div class="col-lg-9 order-2 order-lg-1">
+                      <h2>Time Policy</h2>
+                  </div>
+                  <div class="col-lg-3 text-right order-1 order-lg-2">
+                      <ul class="breadcrumb justify-content-lg-end">
+                          <li class="breadcrumb-item"><a >Home</a></li>
+                          <li class="breadcrumb-item active">Time Policy</li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </section>
+        
+        <div class="container min-vh-100">
+        
+        
+        <br>
+            <div class="row" *ngIf="showadd==true">
+             
+                    <div class="col-md-4"> 
+                        </div>    
+                         
+                     <div class="col-md-4"></div>   
+                      <div class="col-md-4 text-end"> <button class="btn btn-sm btn-primary"
+                               (click)="showlist()">List</button></div>     
+                 </div>
+                 <form [formGroup]="hform" >
+                <div class="row " *ngIf="showadd==true">
+                  
+<div class="col-md-6">
+  <label  class="form-label">Role<b style="color:red">*</b></label>
+  <select class="form-select form-select form-select-sm"   formControlName="roleid" aria-label=".form-select-sm example" [(ngModel)]="role_id" [ngClass]="{ 'is-invalid': submitted && f['roleid'].errors }">
+    <option value="">--Select--</option>
+    <option *ngFor="let role of role_list" [ngValue]="role.role_id" >
+      {{role.role_name}} 
+ </option>
+  </select>
+  <div *ngIf="submitted && f['roleid'].errors" class="invalid-feedback">
+    <div *ngIf="f['roleid'].errors['required']">Select Role</div> 
+  </div>
+</div>
+
+<div class="col-md-6" *ngIf="role_id=='8'">
+  <label  class="form-label">Hub List<b style="color:red">*</b></label>
+  <select class="form-select form-select form-select-sm" formControlName="hubid" aria-label=".form-select-sm example" [(ngModel)]="hub_fc_ve_de_id" [ngClass]="{ 'is-invalid': submitted && f['hubid'].errors }"
+ >
+    <option value="">--Select--</option>
+    <option *ngFor="let hb of hub_list" [ngValue]="hb.hub_id" >
+      {{hb.hub_name}} 
+ </option>
+  </select>
+  <div *ngIf="submitted && f['hubid'].errors" class="invalid-feedback">
+    <div *ngIf="f['hubid'].errors['required']">Select Hub</div> 
+  </div>
+</div>
+<div class="col-md-6" *ngIf="role_id=='9'">
+  <label  class="form-label">FC List<b style="color:red">*</b></label>
+  <select class="form-select form-select form-select-sm" formControlName="fcid" aria-label=".form-select-sm example" [(ngModel)]="hub_fc_ve_de_id" [ngClass]="{ 'is-invalid': submitted && f['fcid'].errors }"
+ >
+    <option value="">--Select--</option>
+    <option *ngFor="let fc of fc_list" [ngValue]="fc.facilitation_id" >
+      {{fc.facilitation_name}} 
+ </option>
+  </select>
+  <div *ngIf="submitted && f['fcid'].errors" class="invalid-feedback">
+    <div *ngIf="f['fcid'].errors['required']">Select FC</div> 
+  </div>
+</div>
+
+<div class="col-md-6" *ngIf="role_id=='4'">
+  <label  class="form-label" >Vendor List<b style="color:red">*</b></label>
+  <select class="form-select form-select form-select-sm" formControlName="veid" aria-label=".form-select-sm example" [(ngModel)]="hub_fc_ve_de_id" [ngClass]="{ 'is-invalid': submitted && f['veid'].errors }"
+>
+    <option value="">--Select--</option>
+    <option *ngFor="let ve of vendor_list" [ngValue]="ve.vendor_id" >
+      {{ve.vendor_name}} 
+ </option>
+  </select>
+  <div *ngIf="submitted && f['veid'].errors" class="invalid-feedback">
+    <div *ngIf="f['veid'].errors['required']">Select Vendor</div> 
+  </div>
+</div>
+
+<div class="col-md-6" *ngIf="role_id=='7'">
+  <label  class="form-label">DE List<b style="color:red">*</b></label>
+  <select class="form-select form-select form-select-sm" formControlName="deid" aria-label=".form-select-sm example" [(ngModel)]="hub_fc_ve_de_id" [ngClass]="{ 'is-invalid': submitted && f['deid'].errors }"
+ >
+    <option value="">--Select--</option>
+    <option *ngFor="let de of de_list" [ngValue]="de.delivery_executive_id" >
+      {{de.de_name}} 
+ </option>
+  </select>
+  <div *ngIf="submitted && f['deid'].errors" class="invalid-feedback">
+    <div *ngIf="f['deid'].errors['required']">Select DE</div> 
+  </div>
+</div>
+
+                                      <div class="col-md-6">
+                                        <label  class="form-label">Start Time<b style="color:red">*</b></label>
+                                        <input type="time" formControlName="start_time" step="05" min="00" max="60" class="form-control form-control-sm" placeholder="Enter Departure Time" [(ngModel)]="start_time" 
+                                        [ngClass]="{ 'is-invalid': submitted && f['start_time'].errors }"> 
+                                        <div *ngIf="submitted && f['start_time'].errors" class="invalid-feedback">
+                                          <div *ngIf="f['start_time'].errors['required']">Enter Start Time</div> 
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                        <label  class="form-label">End Time<b style="color:red">*</b></label>
+                                        <input type="time" formControlName="end_time" step="05" min="00" max="60" class="form-control form-control-sm" placeholder="Enter Departure Time" [(ngModel)]="end_time" 
+                                        [ngClass]="{ 'is-invalid': submitted && f['end_time'].errors }"> 
+                                        <div *ngIf="submitted && f['end_time'].errors" class="invalid-feedback">
+                                          <div *ngIf="f['end_time'].errors['required']">Enter End Time</div> 
+                                        </div>
+                                      </div>                                  
+
+                      <div class="col-md-6" *ngIf="role_id=='4'">
+                        <label  class="form-label">Vendor Process Time<b style="color:red">*</b></label>
+                        <input type="text" class="form-control" [(ngModel)]="vendor_process_time" formControlName="vendorprocess_time"  [minlength]="1" [maxlength]="2" placeholder="Enter Vendor Process Time" pattern="^[1-9][0-9]*$" oninput="if(!this.value.match('^[1-9][0-9]*$'))this.value='';" [ngClass]="{ 'is-invalid': submitted && f['vendorprocess_time'].errors }" required>
+                        <div *ngIf="submitted && f['vendorprocess_time'].errors" class="invalid-feedback">
+                          <div *ngIf="f['vendorprocess_time'].errors['required']">Enter Vendor Process Time</div>
+                       
+                        </div>
+                      </div>
+                  
+                   
+                  </div>
+          </form>
+            <div class="text-center my-4" *ngIf="showadd==true">
+              <input type="text" [(ngModel)]="work_policy_id" hidden>
+              <button type="button" class="btn  btn-template bg-warning" (click)="clear()" >Clear</button>
+              &nbsp;
+              <button type="button" class="btn  btn-template bg-primary" (click)="save_data()">Save</button>
+             
+            </div>
+       
+           
+            
+          <div *ngIf="showadd==false">
+           
+   <div class="row">
+ 
+      <div class="col-md-4"> <button class="btn btn-sm btn-primary" (click)="show_add()">Add New </button> </div>    
+           
+       <div class="col-md-4"></div>   
+       <div class="col-md-4" style="float: right">
+          <input class="form-control form-control-sm" type="text" [(ngModel)]="search" placeholder="search here...">
+      </div>    
+   </div>
+   
+   
+    <table class="table table-bordered mt-4 shadow shadow-sm">
+      <thead>
+        <tr>
+          <th>SL No</th>
+          <th>Role Name</th>
+          <th>Hub/FC/Vendor/DE Name</th>
+          <th>Start Time</th>
+          <th>End Time</th>        
+          <th>Vendor Process Time</th>
+         <th>Action</th> 
+        
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let fc of hub_timing_list| filter:search | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count};let i = index; filter:search">
+            <th>{{tableSize *(page-1)+i+1}}</th>
+          <td>{{fc.role_name}}</td>
+          <td>{{fc.hub_fc_ve_de_name}}</td>
+          <td>{{fc.start_time}}</td>
+          <td>{{fc.end_time}}</td>
+          <td>{{fc.vendor_process_time}}</td>        
+            <td><button class="btn btn-sm btn-info" (click)="edit_data(fc)">Edit</button>
+          </td> 
+        
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              (pageChange)="onTableDataChange($event)"
+            >
+            </pagination-controls>
+          </div>  
+  </div>
+  
+      
+        
+        </div>
+        
+        

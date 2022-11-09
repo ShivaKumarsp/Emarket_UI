@@ -1,0 +1,116 @@
+
+        
+        <div class="container min-vh-100">
+        
+            <form [formGroup]="hform" >
+          <br>
+              <div class="row" *ngIf="showadd==true">
+               
+                      <div class="col-md-4"> 
+                         <h3>Vendor Commission</h3> </div>    
+                           
+                       <div class="col-md-4"></div>   
+                        <div class="col-md-4 text-end"> <button class="btn btn-sm btn-primary"
+                                 (click)="showlist()">All Commission</button></div>     
+                   </div>
+               
+                  <div class="row " *ngIf="showadd==true">
+                    <div class="col-md-6" *ngIf="edit==false" >
+                      <label  class="form-label">Additional Category<b style="color:red">*</b></label>
+                        <select class="form-control" [(ngModel)]="additional_cat_id"   formControlName="add_cat" 
+                        [ngClass]="{ 'is-invalid': submitted && f['add_cat'].errors }" required>
+                        <option value="" >-- Select Category --</option>
+                        <option *ngFor="let cat of add_cat_list" [ngValue]="cat.additionalcat_id">
+                            {{cat.additionalcat_name}}
+                        </option>
+                        </select>
+                        <div *ngIf="submitted && f['add_cat'].errors" class="invalid-feedback">
+                          <div *ngIf="f['add_cat'].errors['required']">Select Additional Category</div>
+                        </div>
+                    </div>
+                     
+                    <div class="col-md-6"  *ngIf="edit==true">
+                        <label  class="form-label">Additional Category<b style="color:red">*</b></label>
+                        <input type="text" class="form-control" [(ngModel)]="categoryname" 
+                        formControlName="cat">
+                      </div>
+
+                                   
+                        <div class="col-md-6">
+                                <label  class="form-label">Commission<b style="color:red">*</b></label>
+                                <input type="number" class="form-control" [(ngModel)]="commission_percentage" 
+                                formControlName="v_commission"   placeholder="Enter Commission" min="1"
+                                 max="1000000" step="0.001"   oninput="validity.valid||(value='');"
+                                [ngClass]="{ 'is-invalid': submitted && f['v_commission'].errors }">
+                                <div *ngIf="submitted && f['v_commission'].errors" class="invalid-feedback">
+                                  <div *ngIf="f['v_commission'].errors['required']">Enter Commission</div>
+                                </div>
+                              </div>
+  
+                       
+                     
+                      
+                     
+                    </div>
+                    
+              <div class="text-center my-4" *ngIf="showadd==true">
+                <input type="text" [(ngModel)]="commission_id" hidden>
+                <button type="button" class="btn  btn-template bg-warning" (click)="clear()" >Clear</button>
+                &nbsp;
+                <button type="button" class="btn  btn-template bg-primary" (click)="save_data()">Save</button>
+               
+               
+              </div>
+         
+            </form>
+              
+            <div *ngIf="showadd==false">
+              <h3>All Commission List</h3>     
+     <div class="row">     
+        <div class="col-md-4"> <button class="btn btn-sm btn-primary" (click)="show_add()">Add New </button></div>     
+        <div class="col-md-4"></div> 
+        <div class="col-md-4">
+            <input class="form-control form-control-sm" type="text" [(ngModel)]="search" placeholder="search here...">
+        </div>
+  
+        </div>
+     
+     
+      <table class="table table-bordered mt-4 shadow shadow-sm">
+        <thead>
+          <tr>
+            <th>SL No</th>
+            <th>Category Name</th>
+            <th>Commission</th>            
+            <th>Action</th> 
+          
+          </tr>
+        </thead>
+        <tbody>
+              <tr *ngFor="let fc of vendor_commission_list| filter:search | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count};let i = index; filter:search">
+              <th>{{tableSize *(page-1)+i+1}}</th>
+            <td>{{fc.additional_cat_name}}</td>
+            <td>{{fc.commission_percentage}}</td>
+            <td>
+                <button class="btn btn-sm btn-info" (click)="edit_data(fc)">Edit</button>&nbsp;
+               
+            </td> 
+          
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center">
+              <pagination-controls
+                previousLabel="Prev"
+                nextLabel="Next"
+                (pageChange)="onTableDataChange($event)"
+              >
+              </pagination-controls>
+            </div>  
+    </div>
+    
+        
+          
+          </div>
+          
+          

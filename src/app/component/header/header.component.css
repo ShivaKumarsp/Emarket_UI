@@ -1,0 +1,29 @@
+nav.navbar .cart-no1 {
+          min-width: 20px;
+          min-height: 20px;
+          border-radius: 50%;
+          font-size: 12px;
+          background: #9055A2;
+          color: #fff;
+          text-align: center;
+          position: absolute;
+          top: -5px;
+          right: 39px;
+      }
+
+      nav.navbar .cart-no2 {
+          min-width: 20px;
+          min-height: 20px;
+          border-radius: 50%;
+          font-size: 12px;
+          background: #9055A2;
+          color: #fff;
+          text-align: center;
+          position: absolute;
+          top: -5px;
+          right: -14px;
+      }
+      nav.navbar .right-col .cart {
+          font-size: 26px;
+          position: relative;
+      }
